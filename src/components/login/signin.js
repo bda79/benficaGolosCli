@@ -1,59 +1,53 @@
 import React from 'react';
 import loginImg from '../../img/slbLogo.jpg';
-import axios from 'axios';
-import {Redirect} from 'react-router-dom';
+import { ServiceData } from '../../service/ServiceData';
+import { Redirect } from 'react-router-dom';
 
 
 export class Signin extends React.Component {
-  // eslint-disable-next-line no-useless-constructor
+
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
-      isLogged: false
+      email: null,
+      password: null,
+      isLogged: false,
+      error : null
     }
   }
 
   login = async () => {
-   const userData = {
-     email: this.state.email,
-     password: this.state.password
-   };
+    const {email, password} = this.state;
+    const userData = {
+      email: email,
+      password: password
+    };
 
-   if (userData.email && userData.password) {
-      try {
-        await axios('http://localhost:5000/api/auth', {
-          method: 'POST',
-          data: userData,
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json',
-          }
-        }).then(response => { 
-          if (response.data) {
-            sessionStorage.setItem('token', response.data);
-            this.setState({isLogged: true});
-          } 
-          else {
-            console.log("Email or password invalid!");
-          }
-        })
-      } catch (error) {
-        console.log("Email or password invalid!");
+    if (email && password) {
+      const result = await ServiceData('auth', 'POST', userData);
+      const {data, error} = result;
+      if (data) {
+        sessionStorage.setItem('token', result.data);
+        this.setState({isLogged: true});
       }
-      
-   }
-   else
+
+      if (error) {
+        this.setState({error: error});
+      }
+    }
+    else {
       console.log("Error email and password required!");
+      this.setState({error: 'Error email and password required!'});
+    }
   }
 
   onChange = (e) => {
     this.setState({[e.target.name]: e.target.value});
-    console.log(this.state);
   }
 
   render() {
+    const {error} = this.state;
+
     if (this.state.isLogged) {
       return (<Redirect to={'/home'}/>);
     }
@@ -78,6 +72,7 @@ export class Signin extends React.Component {
               <label htmlFor="password">Password</label>
               <input type="password" name="password" placeholder="password" onChange={this.onChange}/>
             </div>
+            {error && error.length > 0 && (<span className="errorMessage">{error}</span>)}
           </div>
         </div>
         <div className="footer">

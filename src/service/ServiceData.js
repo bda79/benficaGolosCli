@@ -1,20 +1,27 @@
-export function ServiceData(type, method, data) {
-    let baseUrl = 'http://localhost:5000/api/';
-    console.log('assdddd');
+import axios from 'axios';
 
-    return new Promise((resolve, reject) =>{
-        fetch(baseUrl + type, {
-            method: method,
-            body: JSON.stringify(data)
+export async function ServiceData(type, method, data) {
+    let baseUrl = 'http://localhost:5000/api/';
+    
+
+    let result = {};
+    try {
+        await axios(baseUrl + type, {
+          method: method,
+          data: data,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+          }
+        }).then(response => { 
+          if (response.data) {
+            result.data = response.data;
+          } 
         })
-        .then((response) => response.json())
-        .then((responseJson) => {
-            console.log(responseJson);
-            resolve(responseJson);
-        })
-        .catch((error) => {
-            console.log(error);
-            resolve(error);
-        })
-    });
+    } catch (error) {
+        console.log(error);
+        result.error = error.response.data;
+    }
+
+      return result;
 }

@@ -1,0 +1,15 @@
+nav {
+    display: flex;
+    justify-content: flex-end;
+    min-height: 30%;
+    background: url('../../img/slbBanner2.jpg');
+    background-repeat: no-repeat;
+}
+
+.nav-links {
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+    align-items: end;
+    list-style: none;
+}

@@ -6,6 +6,56 @@ const navStyle = {
     color : 'white'
 };
 
+const navigation = (user, logout) => {
+    const link = user && user.name ? `${user.name} (Log Out)`: 'Log Out';
+    
+    if(user.isAdmin) {
+        return(
+            <nav>
+                <ul className="nav-links">
+                    <Link style={navStyle} to='/home'>
+                        <li>Home</li>
+                    </Link>
+                    <Link style={navStyle} to='/user'>
+                        <li>User</li>
+                    </Link>
+                    <Link style={navStyle} to='/team'>
+                        <li>Team</li>
+                    </Link>
+                    <Link style={navStyle} to='/game'>
+                        <li>Game</li>
+                    </Link>
+                    <Link style={navStyle} to='/season'>
+                        <li>Season</li>
+                    </Link>
+                    <Link style={navStyle} to='/payment'>
+                        <li>Payment</li>
+                    </Link>
+                    <Link style={navStyle} to='/login' onClick={logout}>
+                        <li>{link}</li>
+                    </Link>
+                </ul>
+            </nav>
+        )
+    }
+
+    return(
+        <nav>
+            <ul className="nav-links">
+                <Link style={navStyle} to='/home'>
+                    <li>Home</li>
+                </Link>
+                <Link style={navStyle} to='/user'>
+                    <li>User</li>
+                </Link>
+                <Link style={navStyle} to='/login' onClick={logout}>
+                    <li>{link}</li>
+                </Link>
+            </ul>
+        </nav>
+    )
+}
+
 export class Nav extends React.Component {
     constructor(props) {
         super(props);
@@ -29,21 +79,6 @@ export class Nav extends React.Component {
 
     render() {
         const {user} = this.state;
-        const link = user ? `${user} (Log Out)`: 'Log Out';
-        return (
-            <nav>
-                <ul className="nav-links">
-                    <Link style={navStyle} to='/home'>
-                        <li>Home</li>
-                    </Link>
-                    <Link style={navStyle} to='/user'>
-                        <li>User</li>
-                    </Link>
-                    <Link style={navStyle} to='/login' onClick={this.logout}>
-                        <li>{link}</li>
-                    </Link>
-                </ul>
-            </nav>
-        );
+        return navigation(user, this.logout)
     }
 }

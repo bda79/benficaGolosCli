@@ -1,5 +1,5 @@
 import React from "react";
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { ServiceData } from "../../../service/ServiceData";
 import Storage from "../../../service/StorageData";
 
@@ -7,8 +7,7 @@ export class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          isLogged: false,
-          loading: 'initial',
+          isLogged: true,
           user: ''
         }
     }
@@ -18,7 +17,6 @@ export class Home extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({ loading: 'true' });
         const token = Storage.get('token');
         if (token) {
             this.loadData(token)
@@ -28,8 +26,7 @@ export class Home extends React.Component {
                     const user = data.data;
                     
                     this.setState({
-                        user: user,
-                        loading: 'false'
+                        user: user
                     });
                     Storage.add('cUser', user);
                 }
@@ -44,27 +41,19 @@ export class Home extends React.Component {
 
         }
         else {
-            this.setState({isLogged: true});
+            this.setState({isLogged: false});
         }
     }
 
-
     render() {
-        const {user, isLogged, loading} = this.state;
+        console.log("Home render");
+        const {user, isLogged} = this.state;
         if (user) {
-            this.props.onChange(user.name);
+            this.props.onChange(user);
         }
         
-        if (isLogged) {
+        if (!isLogged) {
             return (<Redirect to={'/login'}/>);
-        }
-
-        if (loading === 'initial') {
-            return <h2>Intializing...</h2>;
-          }
-          
-        if (loading === 'true') {
-        return <h2>Loading...</h2>;
         }
           
           return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {Login} from '../components/login/login';
-import {AppWrapper} from './appWrapper';
+import AppWrapper from './routeWrapper';
 
 export class AllRoutes extends React.Component {
     render(){

@@ -3,6 +3,14 @@ import loginImg from '../../img/slbLogo.jpg';
 import { ServiceData } from '../../service/ServiceData';
 import { Redirect } from 'react-router-dom';
 
+const inputStyle = {
+  marginTop: '10px',
+  marginBottom: '15px'
+};
+
+const groupStyle = {
+  marginTop: '1em'
+};
 
 export class Signin extends React.Component {
 
@@ -64,13 +72,13 @@ export class Signin extends React.Component {
             <img src={loginImg} alt="" />
           </div>
           <div className="form">
-            <div className="form-group">
+            <div className="form-group" style={groupStyle}>
               <label htmlFor="email">Email</label>
-              <input type="email" name="email" placeholder="email" onChange={this.onChange}/>
+              <input style={inputStyle} type="email" name="email" placeholder="email" onChange={this.onChange}/>
             </div>
-            <div className="form-group">
+            <div className="form-group" style={groupStyle}>
               <label htmlFor="password">Password</label>
-              <input type="password" name="password" placeholder="password" onChange={this.onChange}/>
+              <input style={inputStyle} type="password" name="password" placeholder="password" onChange={this.onChange}/>
             </div>
             {error && error.length > 0 && (<span className="errorMessage">{error}</span>)}
           </div>

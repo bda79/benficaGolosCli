@@ -113,23 +113,17 @@ export class Register extends React.Component {
             <div className="form-group">
               <label htmlFor="name">Name</label>
               <input type="text" name="name" placeholder="name" onChange={this.onChange}/>
-              {errors.name.length > 0 && (
-                <span className="errorMessage">{errors.name}</span>
-              )}
+              <span className="errorMessage">{errors.name.length > 0 ? errors.name : ''}</span>
             </div>
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input type="email" name="email" placeholder="email" onChange={this.onChange}/>
-              {errors.email.length > 0 && (
-                <span className="errorMessage">{errors.email}</span>
-              )}
+              <span className="errorMessage">{errors.email.length > 0 ? errors.email : ''}</span>
             </div>
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input type="password" name="password" placeholder="password" onChange={this.onChange}/>
-              {errors.password.length > 0 && (
-                <span className="errorMessage">{errors.password}</span>
-              )}
+              <span className="errorMessage">{errors.password.length > 0 ? errors.password : ''}</span>
             </div>
             {submitError && submitError.length > 0 && (<span className="errorMessage">{submitError}</span>)}
           </div>

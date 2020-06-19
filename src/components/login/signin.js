@@ -2,6 +2,7 @@ import React from 'react';
 import loginImg from '../../img/slbLogo.jpg';
 import { ServiceData } from '../../service/ServiceData';
 import { Redirect } from 'react-router-dom';
+import FontAwesome from 'react-fontawesome';
 
 const inputStyle = {
   marginTop: '10px',
@@ -19,9 +20,15 @@ export class Signin extends React.Component {
     this.state = {
       email: null,
       password: null,
+      showPassword: false,
       isLogged: false,
       error : null
     }
+  }
+
+  togglePassword = () => {
+    const showPassword = this.state.showPassword;
+    this.setState({showPassword: !showPassword})
   }
 
   login = async () => {
@@ -54,9 +61,10 @@ export class Signin extends React.Component {
   }
 
   render() {
-    const {error} = this.state;
+    const {error, isLogged, showPassword} = this.state;
+    const iconName = showPassword ? "eye-slash" : "eye";
 
-    if (this.state.isLogged) {
+    if (isLogged) {
       return (<Redirect to={'/home'}/>);
     }
 
@@ -74,11 +82,35 @@ export class Signin extends React.Component {
           <div className="form">
             <div className="form-group" style={groupStyle}>
               <label htmlFor="email">Email</label>
-              <input style={inputStyle} type="email" name="email" placeholder="email" onChange={this.onChange}/>
+              <input 
+                style={inputStyle} 
+                type="email" 
+                name="email" 
+                placeholder="email" 
+                onChange={this.onChange}
+              />
             </div>
             <div className="form-group" style={groupStyle}>
-              <label htmlFor="password">Password</label>
-              <input style={inputStyle} type="password" name="password" placeholder="password" onChange={this.onChange}/>
+              <div className="form-password" style={{position: 'relative'}}>
+                <label style={{display: 'flex'}} htmlFor="password">Password</label>
+                <input 
+                  style={inputStyle} 
+                  type={ showPassword? "text" : "password" } 
+                  name="password" 
+                  placeholder="password" 
+                  onChange={this.onChange}
+                />
+                <FontAwesome onClick={this.togglePassword}
+                  className="password-icon"
+                  name={ iconName }
+                  style={{ 
+                    position: 'absolute',
+                    right: '20px',
+                    bottom: '23px',
+                    cursor: 'pointer'
+                  }}
+                />
+              </div>
             </div>
             {error && error.length > 0 && (<span className="errorMessage">{error}</span>)}
           </div>

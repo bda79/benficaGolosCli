@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Storage from '../../service/StorageData';
+import "./style.scss";
 
 const navStyle = {
     color : 'white'
@@ -8,7 +9,6 @@ const navStyle = {
 
 const navigation = (user, logout) => {
     const link = user && user.name ? `${user.name} (Log Out)`: 'Log Out';
-    
     if(user.isAdmin) {
         return(
             <nav>
@@ -56,29 +56,22 @@ const navigation = (user, logout) => {
     )
 }
 
-export class Nav extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            user: ''
-        }
-    }
+const Nav = props => {
+    const [user, setUser] = useState(props.user);
 
-    componentDidUpdate(prevProps) {
-        if (this.props.user !== prevProps.user) {
-          
-          this.setState({user: this.props.user});
-        }
-      }
+    useEffect(
+        () => {
+          setUser(props.user);
+        },
+        [ props ]
+    );
 
-
-    logout = () => {
+    const logout = () => {
         Storage.delete('token');
         Storage.clear()
     }
 
-    render() {
-        const {user} = this.state;
-        return navigation(user, this.logout)
-    }
+    return navigation(user, logout);
 }
+
+export default Nav;

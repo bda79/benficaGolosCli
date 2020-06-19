@@ -1,53 +1,58 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { Switch, Route } from 'react-router-dom';
-import { Home, User } from '../components/pages/normal/index';
+import { Home } from '../components/pages/normal/home';
+import User from '../components/pages/normal/user';
 import {Team, Game, Payment, Season } from '../components/pages/admin/index';
-import { Nav } from '../components/nav/index';
+import Nav from '../components/nav/nav';
 import Storage from '../service/StorageData';
 
 export default function AppWrapper() {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
 
     function handleUser(value) {
         if (user.name !== value.name)
             setUser(value);
     }
+    
+    if (!user) {
+        const cUser = Storage.get('cUser');
+        setUser(cUser);
+    }
 
-    function display() {
-        console.log("W Render");
-        const token = Storage.get('token');
-        if(!token)
-            return (<Redirect to="/login" />);
-        
-        if (user && user.isAdmin) {
-            return(
-                <div className="App">
-                    <Nav user={user}/>
-                    <Switch>
-                        <Route path='/home' component={()=> <Home onChange={handleUser} /> } />
-                        <Route path='/user' component={User} />
-                        <Route path='/team' component={Team} />
-                        <Route path='/game' component={Game} />
-                        <Route path='/payment' component={Payment} />
-                        <Route path='/season' component={Season} />
-                    </Switch>
-                </div>
-            );
-        }
-        
+    return display(user, handleUser);
+}
+
+function display(cUser, handleUser) {
+
+    const token = Storage.get('token');
+    if(!token)
+        return (<Redirect to="/login" />);
+    
+    if (cUser && cUser.isAdmin) {
         return(
             <div className="App">
-                <Nav user={user}/>
+                <Nav user={cUser}/>
                 <Switch>
                     <Route path='/home' component={()=> <Home onChange={handleUser} /> } />
                     <Route path='/user' component={User} />
+                    <Route path='/team' component={Team} />
+                    <Route path='/game' component={Game} />
+                    <Route path='/payment' component={Payment} />
+                    <Route path='/season' component={Season} />
                 </Switch>
             </div>
         );
-
     }
     
+    return(
+        <div className="App">
+            <Nav user={cUser}/>
+            <Switch>
+                <Route path='/home' component={()=> <Home onChange={handleUser} /> } />
+                <Route path='/user' component={User} />
+            </Switch>
+        </div>
+    );
 
-    return display();
 }

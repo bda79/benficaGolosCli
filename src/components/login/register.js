@@ -2,6 +2,7 @@ import React from "react";
 import loginImg from "../../img/slbLogo.jpg";
 import { ServiceData } from '../../service/ServiceData';
 import {Redirect} from 'react-router-dom';
+import FontAwesome from 'react-fontawesome';
 
 const emailRegex = RegExp(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
 const passwordRegex = RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{5,}$/);
@@ -31,6 +32,7 @@ export class Register extends React.Component {
       email: null,
       password: null,
       isLogged: false,
+      showPassword: false,
       errors : {
         name: '',
         email: '',
@@ -60,6 +62,11 @@ export class Register extends React.Component {
     }
     
     this.setState({errors, [name]: value});
+  }
+
+  togglePassword = () => {
+    const showPassword = this.state.showPassword;
+    this.setState({showPassword: !showPassword})
   }
 
   handleSubmit = async (e) => {
@@ -92,9 +99,10 @@ export class Register extends React.Component {
   }
 
   render() {
-    const { errors, submitError } = this.state;
+    const { errors, submitError, isLogged, showPassword } = this.state;
+    const iconName = showPassword ? "eye-slash" : "eye";
 
-    if (this.state.isLogged) {
+    if (isLogged) {
       return (<Redirect to={'/home'}/>);
     }
 
@@ -121,8 +129,25 @@ export class Register extends React.Component {
               <span className="errorMessage">{errors.email.length > 0 ? errors.email : ''}</span>
             </div>
             <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input type="password" name="password" placeholder="password" onChange={this.onChange}/>
+              <div className="form-password" style={{position: 'relative'}}>
+                <label style={{display: 'flex'}} htmlFor="password">Password</label>
+                <input
+                  type={ showPassword? "text" : "password" } 
+                  name="password" 
+                  placeholder="password" 
+                  onChange={this.onChange}
+                />
+                <FontAwesome onClick={this.togglePassword}
+                  className="password-icon"
+                  name={ iconName }
+                  style={{ 
+                  position: 'absolute',
+                  right: '20px',
+                  bottom: '13px',
+                  cursor: 'pointer'
+                  }}
+                />
+              </div>
               <span className="errorMessage">{errors.password.length > 0 ? errors.password : ''}</span>
             </div>
             {submitError && submitError.length > 0 && (<span className="errorMessage">{submitError}</span>)}

@@ -5,17 +5,13 @@ const Storage = {
         sessionStorage.setItem(key, v);
     },
     get: function(key) {
+        const item = sessionStorage.getItem(key);
         try {
-            const item = sessionStorage.getItem(key);
-            if (item && item instanceof Object)
-                return JSON.parse(item);
-            else if (item)
-                return item;
-            return null;
+            return JSON.parse(item);
 
           } catch (error) {
-                console.log(error);
-                return null;
+                //console.log(error);
+                return item;
           }
     },
     delete: function(key) {

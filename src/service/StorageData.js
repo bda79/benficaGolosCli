@@ -6,6 +6,8 @@ const Storage = {
     },
     get: function(key) {
         const item = sessionStorage.getItem(key);
+        if (item === null) return null;
+        
         try {
             return JSON.parse(item);
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import loginImg from '../../img/slbLogo.jpg';
 import { ServiceData } from '../../service/ServiceData';
+import Storage  from '../../service/StorageData';
 import { Redirect } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 
@@ -31,29 +32,33 @@ export class Signin extends React.Component {
     this.setState({showPassword: !showPassword})
   }
 
-  login = async () => {
+  loadData = async (userData) => {
+    return await ServiceData('auth', 'POST', userData);
+  }
+
+  login = () => {
     const {email, password} = this.state;
-    const userData = {
-      email: email,
-      password: password
-    };
-
-    if (email && password) {
-      const result = await ServiceData('auth', 'POST', userData);
-      const {data, error} = result;
-      if (data) {
-        sessionStorage.setItem('token', result.data);
-        this.setState({isLogged: true});
-      }
-
-      if (error) {
-        this.setState({error: error});
-      }
+    if ( email && password) {
+      const userData = { email: email, password: password};
+      this.loadData(userData)
+      .then((data) => {
+          if (data.data) {
+            Storage.add('token', data.data);
+            this.setState({isLogged: true});
+          }
+          if (data.error) {
+            this.setState({error: data.error});
+          }
+      }).catch(err => {
+          console.log("Err", err);
+          this.setState({error: err});
+      })
     }
     else {
       console.log("Error email and password required!");
       this.setState({error: 'Error email and password required!'});
     }
+
   }
 
   onChange = (e) => {
@@ -68,7 +73,7 @@ export class Signin extends React.Component {
       return (<Redirect to={'/home'}/>);
     }
 
-    if (sessionStorage.getItem('token')) {
+    if (Storage.get('token')) {
       return (<Redirect to={'/home'}/>);
     }
 
@@ -82,13 +87,7 @@ export class Signin extends React.Component {
           <div className="form">
             <div className="form-group" style={groupStyle}>
               <label htmlFor="email">Email</label>
-              <input 
-                style={inputStyle} 
-                type="email" 
-                name="email" 
-                placeholder="email" 
-                onChange={this.onChange}
-              />
+              <input style={inputStyle} type="email" name="email" placeholder="email" onChange={this.onChange}/>
             </div>
             <div className="form-group" style={groupStyle}>
               <div className="form-password" style={{position: 'relative'}}>

@@ -1,39 +1,40 @@
-import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import Storage from '../../service/StorageData';
-import "./style.scss";
 
 const navStyle = {
     color : 'white'
 };
 
 const navigation = (user, logout) => {
+    
     const link = user && user.name ? `${user.name} (Log Out)`: 'Log Out';
+    
     if(user.isAdmin) {
         return(
             <nav>
                 <ul className="nav-links">
-                    <Link style={navStyle} to='/home'>
+                    <NavLink style={navStyle} to='/home' activeClassName="active-link">
                         <li>Home</li>
-                    </Link>
-                    <Link style={navStyle} to='/user'>
+                    </NavLink>
+                    <NavLink style={navStyle} to='/user' activeClassName="active-link">
                         <li>User</li>
-                    </Link>
-                    <Link style={navStyle} to='/team'>
+                    </NavLink>
+                    <NavLink style={navStyle} to='/team' activeClassName="active-link">
                         <li>Team</li>
-                    </Link>
-                    <Link style={navStyle} to='/game'>
+                    </NavLink>
+                    <NavLink style={navStyle} to='/game' activeClassName="active-link">
                         <li>Game</li>
-                    </Link>
-                    <Link style={navStyle} to='/season'>
+                    </NavLink>
+                    <NavLink style={navStyle} to='/season' activeClassName="active-link">
                         <li>Season</li>
-                    </Link>
-                    <Link style={navStyle} to='/payment'>
+                    </NavLink>
+                    <NavLink style={navStyle} to='/payment' activeClassName="active-link">
                         <li>Payment</li>
-                    </Link>
-                    <Link style={navStyle} to='/login' onClick={logout}>
+                    </NavLink>
+                    <NavLink style={navStyle} to='/login' onClick={logout} activeClassName="active-link">
                         <li>{link}</li>
-                    </Link>
+                    </NavLink>
                 </ul>
             </nav>
         )
@@ -42,36 +43,29 @@ const navigation = (user, logout) => {
     return(
         <nav>
             <ul className="nav-links">
-                <Link style={navStyle} to='/home'>
+                <NavLink style={navStyle} to='/home' activeClassName="active-link">
                     <li>Home</li>
-                </Link>
-                <Link style={navStyle} to='/user'>
+                </NavLink>
+                <NavLink style={navStyle} to='/user' activeClassName="active-link">
                     <li>User</li>
-                </Link>
-                <Link style={navStyle} to='/login' onClick={logout}>
+                </NavLink>
+                <NavLink style={navStyle} to='/login' onClick={logout} activeClassName="active-link">
                     <li>{link}</li>
-                </Link>
+                </NavLink>
             </ul>
         </nav>
     )
 }
 
-const Nav = props => {
-    const [user, setUser] = useState(props.user);
+export class Nav extends React.Component {
 
-    useEffect(
-        () => {
-          setUser(props.user);
-        },
-        [ props ]
-    );
-
-    const logout = () => {
+    logout = () => {
         Storage.delete('token');
         Storage.clear()
     }
 
-    return navigation(user, logout);
+    render() {
+        const user = this.props.user;
+        return navigation(user, this.logout)
+    }
 }
-
-export default Nav;

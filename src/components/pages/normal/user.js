@@ -1,17 +1,18 @@
 import React, { useState, Fragment }  from 'react';
-import AddUser from '../userComponents/addUser';
-import EditUser from '../userComponents/editUser';
-import UserTable from '../userComponents/userTable';
+import AddUser from '../../userComponents/addUser';
+import EditUser from '../../userComponents/editUser';
+import UserTable from '../../userComponents/userTable';
+import './user.scss';
 
 const User = () => {
     // Data
 	const usersData = [
-		{ id: 1, name: 'Tania', username: 'floppydiskette' },
-		{ id: 2, name: 'Craig', username: 'siliconeidolon' },
-		{ id: 3, name: 'Ben', username: 'benisphere' },
+		{ id: 1, name: 'Tania', email: 'fff@hotmail.com', password: '1234' },
+		{ id: 2, name: 'Craig', email: 'sss@hotmail.com', password: '4321' },
+		{ id: 3, name: 'Ben', email: 'bbb@hotmail.com', password: '1111' },
 	]
 
-	const initialFormState = { id: null, name: '', username: '' }
+	const initialFormState = { id: null, name: '', email: '', password: '' }
 
 	// Setting state
 	const [ users, setUsers ] = useState(usersData);
@@ -39,17 +40,16 @@ const User = () => {
 	const editRow = user => {
 		setEditing(true);
 
-		setCurrentUser({ id: user.id, name: user.name, username: user.username });
+		setCurrentUser({ id: user.id, name: user.name, email: user.email, password: user.password });
 	}
 
 	return (
 		<div className="container">
-			<h1>User Page</h1>
-			<div className="flex-row">
-				<div className="flex-large">
+			<div className="flex-container">
+				<div className="column">
 					{editing ? (
 						<Fragment>
-							<h2>Edit user</h2>
+							<h2>Edit User</h2>
 							<EditUser
 								editing={editing}
 								setEditing={setEditing}
@@ -59,12 +59,12 @@ const User = () => {
 						</Fragment>
 					) : (
 						<Fragment>
-							<h2>Add user</h2>
+							<h2>Add User</h2>
 							<AddUser addUser={_addUser} />
 						</Fragment>
 					)}
 				</div>
-				<div className="flex-large">
+				<div className="column">
 					<h2>View users</h2>
 					<UserTable users={users} editRow={editRow} deleteUser={deleteUser} />
 				</div>
@@ -74,3 +74,4 @@ const User = () => {
 }
 
 export default User
+

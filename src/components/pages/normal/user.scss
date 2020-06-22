@@ -1,0 +1,133 @@
+.container {
+    border: 2px solid #000;
+    margin-right: auto;
+    margin-left: auto;
+}
+.flex-container{
+	width: 80%;
+	margin: 0 auto;
+	display: -webkit-flex; /* Safari */		
+	display: flex; /* Standard syntax */
+}
+.flex-container .column{
+	padding: 10px;
+	-webkit-flex: 1; /* Safari */
+	-ms-flex: 1; /* IE 10 */
+    flex: 1; /* Standard syntax */
+    max-width: 50em;
+}
+.form {
+    margin-top: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: fit-content;
+      label {
+        font-size: 18px;
+      }
+      input {
+        margin-top: 5px;
+        min-width: 26em;
+        height: 30px;
+        padding: 0px 15px;
+        font-size: 16px;
+        font-family: "Open Sans", sans-serif;
+        background-color: #f3f3f3;
+        border: 0;
+        border-radius: 4px;
+        margin-bottom: 5px;
+        transition: all 250ms ease-in-out;
+        &:focus {
+          outline: none;
+          box-shadow: 0px 0px 12px 0.8px #a00b0b;
+        }
+      }
+    }
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  // Extra border underneath header
+  thead th {
+    border-bottom: 2px solid #dedede;
+  }
+  
+  // Extra border above footer
+  tfoot th {
+    border-top: 2px solid #dedede;
+  }
+  
+  td {
+    border-bottom: 1px solid #dedede;
+  }
+  
+  th,
+  td {
+    text-align: left;
+    padding: 0.5rem;
+  }
+
+  p,
+  ol,
+  ul,
+  dl,
+  table {
+    margin: 0 0 1.5rem 0;
+  }
+
+.button-joiner {
+    padding: 5px 0;
+}
+button,
+.button {
+	margin-bottom: 0 !important;
+    margin-right: .5rem;
+    border: 1px solid #be1a14;
+    background: #e25822;
+    color: #ffffff;
+    -webkit-appearance: none;
+    display: inline-block;
+    border-radius: 4px;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    text-transform: none;
+    padding: 0.55rem 1.25rem;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1;
+}
+
+.muted-button,
+a.muted-button {
+    margin-bottom: 0 !important;
+    margin-right: .5rem;
+    border: 1px solid #be1a14;
+    background: #808080;
+    color: #ffffff;
+    -webkit-appearance: none;
+    display: inline-block;
+    border-radius: 4px;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    text-transform: none;
+    padding: 0.55rem 1.25rem;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1;
+}

@@ -29,6 +29,7 @@ export class Home extends React.Component {
                         user: user
                     });
                     Storage.add('cUser', user);
+                    this.props.onChange(user);
                 }
                 if (data.error) {
                     console.log("Error: ", data.error);
@@ -48,9 +49,6 @@ export class Home extends React.Component {
     render() {
         console.log("Home render");
         const {user, isLogged} = this.state;
-        if (user) {
-            this.props.onChange(user);
-        }
         
         if (!isLogged) {
             return (<Redirect to={'/login'}/>);

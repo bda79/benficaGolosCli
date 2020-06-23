@@ -34,7 +34,7 @@ export default function AppWrapper() {
                     <Nav user={user}/>
                     <Switch>
                         <Route path='/home' component={()=> <Home onChange={handleUser} /> } />
-                        <Route path='/user' component={User} />
+                        <Route path='/user' component={()=> <User admin={true}/> } />
                         <Route path='/team' component={Team} />
                         <Route path='/game' component={Game} />
                         <Route path='/payment' component={Payment} />
@@ -49,7 +49,7 @@ export default function AppWrapper() {
                 <Nav user={user}/>
                 <Switch>
                     <Route path='/home' component={()=> <Home onChange={handleUser} /> } />
-                    <Route path='/user' component={User} />
+                    <Route path='/user' component={()=> <User admin={false}/> } />
                 </Switch>
             </div>
         );

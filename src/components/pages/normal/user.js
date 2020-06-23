@@ -1,23 +1,46 @@
-import React, { useState, Fragment }  from 'react';
+import React, { useState, useEffect, Fragment }  from 'react';
 import AddUser from '../../userComponents/addUser';
 import EditUser from '../../userComponents/editUser';
 import UserTable from '../../userComponents/userTable';
+import { ServiceData } from "../../../service/ServiceData";
+import Storage from "../../../service/StorageData";
 import './user.scss';
 
-const User = () => {
-    // Data
-	const usersData = [
-		{ id: 1, name: 'Tania', email: 'fff@hotmail.com', password: '1234' },
-		{ id: 2, name: 'Craig', email: 'sss@hotmail.com', password: '4321' },
-		{ id: 3, name: 'Ben', email: 'bbb@hotmail.com', password: '1111' },
-	]
+const User = (admin) => {
+	// falta guardar quando se faz add e edit, na BD
+	// falta quando nao e admin
+	// falta  campo para mostar erros
 
-	const initialFormState = { id: null, name: '', email: '', password: '' }
-
-	// Setting state
-	const [ users, setUsers ] = useState(usersData);
-	const [ currentUser, setCurrentUser ] = useState(initialFormState);
+	const [ error, setError ] = useState(null);
+	const [ users, setUsers ] = useState([]);
+	const [ currentUser, setCurrentUser ] = useState({ id: null, name: null, email: null, password: null });
 	const [ editing, setEditing ] = useState(false);
+
+	useEffect(() => {
+		
+		const token = Storage.get('token');
+		if (token) {
+			
+			loadUsers(token, admin)
+				.then((data) => {
+					console.log(data);
+
+					if (data.data) {
+						if (admin)
+							setUsers( data.data );
+						else
+						setCurrentUser( data.data );
+					}
+					if (data.error) {
+						setError( data.error );
+					}
+				})
+				.catch(err => {
+					console.log("Error: ", err);
+				})
+		}
+	}, [admin]);
+
 
 	// CRUD operations
 	const _addUser = user => {
@@ -71,6 +94,13 @@ const User = () => {
 			</div>
 		</div>
 	)
+}
+
+const loadUsers = async (token, admin)=> {
+	if (admin)
+		return await ServiceData('users', 'GET', null, token);
+	else
+		return await ServiceData('users/me', 'GET', null, token);
 }
 
 export default User

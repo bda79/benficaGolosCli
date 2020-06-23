@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import loginImg from '../../img/slbLogo.jpg';
 import { ServiceData } from '../../service/ServiceData';
 import Storage  from '../../service/StorageData';
@@ -13,6 +14,11 @@ const inputStyle = {
 const groupStyle = {
   marginTop: '1em'
 };
+
+const navStyle = {
+  marginBottom: '25px',
+  display: 'flex'
+}
 
 export class Signin extends React.Component {
 
@@ -115,6 +121,7 @@ export class Signin extends React.Component {
           </div>
         </div>
         <div className="footer">
+          <NavLink style={navStyle} to='/forgot'>Forgot Password?</NavLink>
           <button type="button" className="btn" onClick={this.login}>
             Login
           </button>

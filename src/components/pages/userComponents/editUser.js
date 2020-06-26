@@ -3,7 +3,6 @@ import FontAwesome from 'react-fontawesome';
 
 const EditUser = props => {
   const [ user, setUser ] = useState(props.currentUser);
-  const [ password, setPassword ] = useState(props.currentUser.password);
   const [ showPassword, setShowPassword ] = useState(false);
 
   useEffect(
@@ -19,63 +18,73 @@ const EditUser = props => {
 
   const handleInputChange = e => {
     const { name, value } = e.target;
-
     setUser({ ...user, [name]: value })
   }
 
-  const handlePasswordChange = e => {
-    const { value } = e.target;
-    if (user.password !== password) {
-      setPassword(value);
+  const handleUpdate = () => {
+    if (props.isAdmin) {
+      console.log("-->" ,user._id)
+      props.updateUser(user._id, user);
     }
+    else 
+      props.updateUser(user);
+  }
+
+  const handleEdit = () => {
+    props.setEditing(false);
+  }
+
+  const handleCancel = () => {
+    props.cancelNonAdminEdit();
   }
 
   return (
-    <form
-      onSubmit={event => {
-        event.preventDefault()
-
-        props.updateUser(user.id, user)
-      }}
-    >
-        <div className="form">
-            <div className="form-group" >
-                <label htmlFor="name">Name</label>
-                <input type="name" name="name" value={user.name} onChange={handleInputChange}/>
-            </div>
-            <div className="form-group" >
-                <label htmlFor="email">Email</label>
-                <input type="email" name="email" value={user.email} onChange={handleInputChange}/>
-            </div>
-            <div className="form-group" >
-                <div className="form-password" style={{position: 'relative'}}>
-                    <label style={{display: 'flex'}} htmlFor="password">Password</label>
-                    <input
+    
+      <div className="form">
+          <div className="form-group" >
+              <label htmlFor="name">Name</label>
+              <input type="name" name="name" value={user ? user.name : ''} onChange={handleInputChange}/>
+          </div>
+          <div className="form-group" >
+              <label htmlFor="email">Email</label>
+              <input type="email" name="email" value={user ? user.email : ''} onChange={handleInputChange}/>
+          </div>
+          <div className="form-group" >
+              <div className="form-password" style={{position: 'relative'}}>
+                  <label style={{display: 'flex'}} htmlFor="password">Password</label>
+                  <input
                     type={ showPassword? "text" : "password" } 
                     name="password" 
-                    placeholder="password" 
-                    onChange={handlePasswordChange}
-                    />
-                    <FontAwesome onClick={togglePassword}
+                    value={user && user.password ? user.password : ''} 
+                    onChange={handleInputChange}
+                  />
+                  <FontAwesome onClick={togglePassword}
                     className="password-icon"
                     name={ showPassword ? "eye-slash" : "eye" }
                     style={{ 
-                    position: 'absolute',
-                    right: '20px',
-                    bottom: '13px',
-                    cursor: 'pointer'
+                      position: 'absolute',
+                      right: '20px',
+                      bottom: '13px',
+                      cursor: 'pointer'
                     }}
-                    />
-                </div>
-            </div>
-            <div className="button-joiner">
-              <button>Update</button>
-              <button onClick={() => props.setEditing(false)} className="button muted-button">
-                  Cancel
+                  />
+              </div>
+          </div>
+          <div className="button-joiner">
+            <button onClick={handleUpdate}>Update</button>
+            {props.isAdmin && (
+              <button onClick={handleEdit} className="button muted-button">
+                Cancel
               </button>
-            </div>
-        </div>
-    </form>
+            )}
+            {!props.isAdmin && (
+              <button onClick={handleCancel} className="button muted-button">
+                Cancel Edit
+              </button>
+            )}
+          </div>
+      </div>
+    
   )
 }
 

@@ -6,6 +6,7 @@ import { ServiceData } from '../../service/ServiceData';
 import Storage from '../../service/StorageData';
 import { Redirect } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
+import moment from 'moment';
 const jwt = require('jsonwebtoken');
 
 const passwordRegex = RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{5,}$/);
@@ -42,6 +43,7 @@ export class Reset extends React.Component {
       email: null,
       password: null,
       isLogged: false,
+      redirect: false,
       showPassword: false,
       errors : {
         email: '',
@@ -55,7 +57,12 @@ export class Reset extends React.Component {
   componentDidMount() {
     const token = this.state.token;
     const decoded = jwt.verify(token, 'pizziUmaMerda');
-    if (decoded.exp >= new Date().getTime()/1000) {
+    const endDate = moment(decoded.exp);
+    const now = moment(new Date());
+    const diff = endDate.diff(now);
+    const diffDuration = moment.duration(diff)
+    console.log("Diff", diffDuration.minutes());
+    if (diffDuration.minutes() > 0) {
       this.setState({email: decoded.email});
     }
     else {
@@ -114,10 +121,13 @@ export class Reset extends React.Component {
   }
 
   render() {
-    const {email, showPassword, errors, error, isLogged} = this.state;
+    const {email, showPassword, errors, error, redirect, isLogged} = this.state;
     const iconName = showPassword ? "eye-slash" : "eye";
     if (isLogged)
       return (<Redirect to={'/home'}/>);
+    
+    if (redirect)
+      return (<Redirect to={'/forgot'}/>);
 
     return (
       <div className="Login">

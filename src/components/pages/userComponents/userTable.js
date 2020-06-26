@@ -12,9 +12,9 @@ const UserTable = props => (
         <tbody>
         {props.users.length > 0 ? (
             props.users.map(user => (
-            <tr key={user.id}>
+            <tr key={user._id}>
                 <td>{user.name}</td>
-                <td>{user.username}</td>
+                <td>{user.email}</td>
                 <td>
                 <div className="button-joiner">
                 <button

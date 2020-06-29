@@ -84,7 +84,7 @@ export class Register extends React.Component {
       const result = await ServiceData('users', 'POST', userData);
       const {data, error} = result;
       if (data) {
-        sessionStorage.setItem('token', result.data);
+        sessionStorage.setItem('token', data.token);
         this.setState({isLogged: true});
       }
 

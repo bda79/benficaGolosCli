@@ -132,7 +132,7 @@ export class Reset extends React.Component {
     return (
       <div className="Login">
         <div className="login">
-         <div className="container">
+         <div className="login_container">
             <div className="base-container">
               <div className="header">Reset</div>
               <div className="content">

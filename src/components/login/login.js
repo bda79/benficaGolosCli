@@ -37,7 +37,7 @@ export class Login extends React.Component {
     return (
       <div className="Login">
         <div className="login">
-          <div className="container" ref={ref => (this.container = ref)}>
+          <div className="login_container" ref={ref => (this.container = ref)}>
             {isLogginActive && (
               <Signin containerRef={ref => (this.current = ref)} />
             )}

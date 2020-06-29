@@ -76,7 +76,7 @@ export class Forgot extends React.Component {
     return (
       <div className="Login">
         <div className="login">
-         <div className="container">
+         <div className="login_container">
             <div className="base-container" ref={this.props.containerRef}>
               <div className="header">Forgot</div>
               <div className="content">

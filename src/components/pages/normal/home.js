@@ -58,7 +58,7 @@ export class Home extends React.Component {
             <div>
               <p>Home Page</p>
               <p>{user.name}</p>
-             </div>
+            </div>
           );
     }
 }

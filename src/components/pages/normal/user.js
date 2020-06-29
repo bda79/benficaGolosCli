@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment }  from 'react';
 import AddUser from '../userComponents/addUser';
 import EditUser from '../userComponents/editUser';
-import UserTable from '../userComponents/userTable';
+import ReactTable from "../../custom/bootstraptab";
 import { ServiceData } from "../../../service/ServiceData";
 import Storage from "../../../service/StorageData";
 import './user.scss';
@@ -11,7 +11,7 @@ const User = (admin) => {
 
 	const [ error, setError ] = useState(null);
 	const [ users, setUsers ] = useState([]);
-	const [ currentUser, setCurrentUser ] = useState({ _id: '', name: '', email: '', password: '' });
+	const [ currentUser, setCurrentUser ] = useState({ _id: '', name: '', email: '', isAdmin: false, password: '' });
 	const [ editing, setEditing ] = useState(false);
 
 	useEffect(() => {
@@ -28,6 +28,7 @@ const User = (admin) => {
 							user.password = null;
 							setCurrentUser( user );
 						}
+						setError(null);
 					}
 					if (data.error) {
 						setError( data.error );
@@ -41,9 +42,27 @@ const User = (admin) => {
 
 
 	// CRUD operations
-	const _addUser = user => {
-		user._id = users.length + 1;
-		setUsers([ ...users, user ]);
+	const _addUser = async (user) => {
+		const {error, data} = await addUserInBD(user);
+		if (data) {
+			setUsers([ ...users, data.user ]);
+			setError(null); 
+		}
+		if (error) {
+			setError(error);
+		}
+	}
+
+	const addUserInBD = async (user) => {
+		const newUser = {
+			name: user.name,
+			email: user.email,
+			password: user.password,
+			isAdmin: user.isAdmin
+		}
+
+		console.log("NewUser", newUser);
+		return await saveUserBD(newUser);
 	}
 
 	const cancelNonAdminEdit = () => {
@@ -53,10 +72,19 @@ const User = (admin) => {
 		setCurrentUser(cUser);
 	}
 
-	const deleteUser = id => {
+	const deleteUser = async (id) => {
 		setEditing(false);
-
-		setUsers(users.filter(user => user._id !== id));
+		
+		const {error, data} = await deleteUserBD(id);
+		if (data) {
+			const bdUser = data;
+			setUsers(users.filter(user => user._id !== bdUser._id));
+			setError(null);
+		}
+		if (error) {
+			setError(error);
+		}
+		
 	}
 
 	const _updateUser = async (user) => {
@@ -66,6 +94,7 @@ const User = (admin) => {
 				let bdUser = data;
 				bdUser.password = null;
 				setCurrentUser(bdUser);
+				setError(null);
 
 			}
 			if (error) {
@@ -79,7 +108,6 @@ const User = (admin) => {
 	}
 	
 	const updateUser = async (id, updatedUser) => {
-
 		const toUpdate = users.find((user) => user._id === id);
 		if (toUpdate) {
 			const {data, error} = await saveUser(updatedUser._id, updatedUser);
@@ -88,6 +116,7 @@ const User = (admin) => {
 				bdUser.password = null;
 				setEditing(false);
 				setUsers(users.map(user => (user._id === bdUser._id ? bdUser : user)));
+				setError(null);
 			}
 			if (error) {
 				console.log(error);
@@ -103,7 +132,7 @@ const User = (admin) => {
 	const editRow = user => {
 		setEditing(true);
 
-		setCurrentUser({ _id: user._id, name: user.name, email: user.email, password: user.password });
+		setCurrentUser({ _id: user._id, name: user.name, email: user.email, isAdmin: user.isAdmin, password: user.password });
 	}
 
 	const saveUser = async (id, user) => {
@@ -129,7 +158,7 @@ function display(error, admin, editing, users, setEditing, currentUser,_updateUs
 	
 	if (admin.admin) {
 		return (
-			<div className="container">
+			<div className="main">
 				<div className="flex-container">
 					<div className="column">
 						{editing ? (
@@ -153,7 +182,7 @@ function display(error, admin, editing, users, setEditing, currentUser,_updateUs
 					</div>
 					<div className="column">
 						<h2>View users</h2>
-						<UserTable users={users} editRow={editRow} deleteUser={deleteUser} />
+						<ReactTable users={users} editRow={editRow} deleteUser={deleteUser} />
 					</div>
 				</div>
 				{error && (<span style={errorStyle} className="errorMessage">{error.length > 0 ? error : ''}</span>)}
@@ -162,7 +191,7 @@ function display(error, admin, editing, users, setEditing, currentUser,_updateUs
 	}
 	else {
 		return (
-			<div className="container">
+			<div className="main">
 				<div className="flex-container" style={{width:"50%"}}>
 					<div className="column">
 						<Fragment>
@@ -221,9 +250,38 @@ const getUser = async (id)=> {
 const saveUserBD = async (user) => {
 	let result = {};
 	const token = Storage.get('token');
-	const path = `users/${user._id}`;
+	let path = `users/${user._id}`;
+	let method = 'PUT'
+	if (!user._id) {
+		path = "users";
+		method = "POST";
+	}
 	
-	await ServiceData(path, 'PUT', user, token)
+	console.log("-->", user);
+	await ServiceData(path, method, user, token)
+		.then((data) => {
+			if (data.data) {
+				result.data = data.data;
+			}
+			if (data.error) {
+				result.error = data.error;
+			}
+			
+		})
+		.catch(err => {
+			console.log("GetUser Error: ", err);
+			result.error = err.response.data;
+		});
+	
+	return result;
+}
+
+const deleteUserBD = async (id) => {
+	let result = {};
+	const token = Storage.get('token');
+	const path = `users/${id}`;
+
+	await ServiceData(path, 'DELETE', null, token)
 		.then((data) => {
 			if (data.data) {
 				result.data = data.data;
@@ -236,7 +294,7 @@ const saveUserBD = async (user) => {
 			console.log("GetUser Error: ", err);
 			result.error = err.response.data;
 		});
-
+	
 	return result;
 }
 

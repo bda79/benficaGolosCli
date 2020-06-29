@@ -1,47 +1,50 @@
 import React from 'react';
+import ReactTable from '../../custom/bootstraptab';
 
-const UserTable = props => (
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {props.users.length > 0 ? (
-            props.users.map(user => (
-            <tr key={user._id}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>
-                <div className="button-joiner">
-                <button
-                    onClick={() => {
-                    props.editRow(user)
-                    }}
-                    className="button"
-                >
-                    Edit
-                </button>
-                <button
-                    onClick={() => props.deleteUser(user.id)}
-                    className="button muted-button"
-                >
-                    Delete
-                </button>
-                </div>
-                </td>
-            </tr>
-            ))
-        ) : (
-            <tr>
-            <td colSpan={3}>No users</td>
-            </tr>
-        )}
-        </tbody>
-    </table>
-)
+const UserTable = props => {
+
+    const editRow = (user) => {
+        props.editRow(user);
+    }
+
+    const deleteRow = (id) => {
+        props.deleteUser(id);
+    }
+
+    const columns = [
+        { dataField: '_id', text: 'ID', hidden: true }, 
+        { dataField: 'name', text: 'Name', sort: true, headerAlign: 'center' }, 
+        { dataField: 'email', text: 'Email', sort: true, headerAlign: 'center' }, 
+        { dataField: 'password', text: 'Password', hidden: true }, 
+        { dataField: 'actions', text: 'Actions', isDummyField: true,
+          formatter: (cell, row ) => {
+              return ( 
+                  <div className="button-joiner">
+                      <button
+                          onClick={() => {
+                              editRow(row);
+                          }}
+                          className="button"
+                      >
+                          Edit
+                      </button>
+                      <button
+                          onClick={() => {
+                              deleteRow(row._id);
+                          }}
+                          className="button muted-button"
+                      >
+                          Delete
+                      </button>
+                  </div>
+              );
+          },
+          headerAlign: 'center'}
+    ];
+      
+    const defaultSorted = [{dataField: 'name', order: 'asc' }];
+
+    return(<ReactTable listData={props.users} columns={columns} defaultSorted={defaultSorted} />);
+}
 
 export default UserTable;

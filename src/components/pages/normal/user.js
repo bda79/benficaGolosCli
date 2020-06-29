@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment }  from 'react';
 import AddUser from '../userComponents/addUser';
 import EditUser from '../userComponents/editUser';
-import ReactTable from "../../custom/bootstraptab";
+import UserTable from "../userComponents/userTable";
 import { ServiceData } from "../../../service/ServiceData";
 import Storage from "../../../service/StorageData";
 import './user.scss';
@@ -182,7 +182,7 @@ function display(error, admin, editing, users, setEditing, currentUser,_updateUs
 					</div>
 					<div className="column">
 						<h2>View users</h2>
-						<ReactTable users={users} editRow={editRow} deleteUser={deleteUser} />
+						<UserTable users={users} editRow={editRow} deleteUser={deleteUser} />
 					</div>
 				</div>
 				{error && (<span style={errorStyle} className="errorMessage">{error.length > 0 ? error : ''}</span>)}

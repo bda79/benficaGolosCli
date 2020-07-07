@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import loginImg from '../../img/slbLogo.jpg';
-import { ServiceData } from '../../service/ServiceData';
+import ServiceData from "../../service/dataUtils";
 import Storage  from '../../service/StorageData';
 import { Redirect } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
@@ -39,7 +39,10 @@ export class Signin extends React.Component {
   }
 
   loadData = async (userData) => {
-    return await ServiceData('auth', 'POST', userData);
+    const headers = ServiceData.headers();
+    const options = ServiceData.options('POST', userData, headers);
+
+    return await ServiceData.execute('auth', options);
   }
 
   login = () => {

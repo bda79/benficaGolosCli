@@ -1,6 +1,6 @@
 import React from "react";
 import loginImg from "../../img/slbLogo.jpg";
-import { ServiceData } from '../../service/ServiceData';
+import ServiceData from "../../service/dataUtils";
 import {Redirect} from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 
@@ -81,7 +81,10 @@ export class Register extends React.Component {
         isAdmin: false
       }
 
-      const result = await ServiceData('users', 'POST', userData);
+      const headers = ServiceData.headers();
+      const options = ServiceData.options('POST', userData, headers);
+      const result = await ServiceData.execute('users', options);
+      
       const {data, error} = result;
       if (data) {
         sessionStorage.setItem('token', data.token);

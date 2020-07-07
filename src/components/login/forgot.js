@@ -3,7 +3,7 @@ import loginImg from '../../img/slbLogo.jpg'
 import './Login.scss';
 import './style.scss';
 import { NavLink } from 'react-router-dom';
-import { ServiceData } from '../../service/ServiceData';
+import ServiceData from '../../service/dataUtils';
 import { Redirect } from 'react-router-dom';
 
 const inputStyle = {
@@ -37,7 +37,10 @@ export class Forgot extends React.Component {
   }
 
   loadData = async (userData) => {
-    return await ServiceData('forgot/get', 'PUT', userData);
+    const headers = ServiceData.headers();
+    const options = ServiceData.options('PUT', userData, headers);
+
+    return await ServiceData.execute('forgot/get', options);
   }
 
   toLogin = (e) => {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from 'react-router-dom';
-import { ServiceData } from "../../../service/ServiceData";
+import ServiceData from "../../../service/dataUtils";
 import Storage from "../../../service/StorageData";
 
 export class Home extends React.Component {
@@ -13,7 +13,10 @@ export class Home extends React.Component {
     }
 
     loadData = async (token) => {
-        return await ServiceData('users/me', 'GET', null, token);
+        const headers = ServiceData.headers(token);
+        const options = ServiceData.options('GET', null, headers);
+
+        return await ServiceData.execute('users/me', options);
     }
 
     componentDidMount() {

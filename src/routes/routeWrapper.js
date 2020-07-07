@@ -3,7 +3,8 @@ import { Redirect } from 'react-router-dom'
 import { Switch, Route } from 'react-router-dom';
 import { Home } from '../components/pages/normal/index';
 import User from '../components/pages/normal/user';
-import {Team, Game, Payment, Season } from '../components/pages/admin/index';
+import Team from '../components/pages/admin/team';
+import {Game, Payment, Season } from '../components/pages/admin/index';
 import { Nav } from '../components/nav/index';
 import Storage from '../service/StorageData';
 

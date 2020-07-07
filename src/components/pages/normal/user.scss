@@ -34,7 +34,7 @@
         font-size: 18px;
         text-shadow: 10px 5px 10px;
       }
-      input:not([type=checkbox]){
+      input:not([type=checkbox]):not([type=file]){
         margin-top: 5px;
         min-width: 26em;
         height: 30px;
@@ -51,6 +51,9 @@
           box-shadow: 0px 0px 12px 0.8px #a00b0b;
         }
       }
+      input[type=file]{
+        display: none;
+      }
     }
     .form-group-checkbox {
       display: flex;
@@ -62,6 +65,26 @@
         font-size: 18px;
       }
     }
+}
+
+.image {
+  display: flex;
+  margin-top: 5px;
+  margin-bottom: 2em;
+}
+.imageBtn {
+  flex: 1;
+  margin-left: 1em;
+  background: #808080;
+}
+.imagePreview {
+  min-width: 19em;
+  img {
+    width: auto;
+    height: auto;
+    max-width: 40px;
+    max-height: 40px;
+  }
 }
 
 .checkbox-inline {

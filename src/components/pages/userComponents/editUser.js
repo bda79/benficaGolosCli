@@ -3,7 +3,6 @@ import FontAwesome from 'react-fontawesome';
 
 const EditUser = props => {
   const [ user, setUser ] = useState(props.currentUser);
-  const [ checked, setChecked ] = useState(props.currentUser.isAdmin);
   const [ showPassword, setShowPassword ] = useState(false);
 
   useEffect(

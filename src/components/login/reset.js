@@ -2,7 +2,7 @@ import React from 'react';
 import loginImg from '../../img/slbLogo.jpg'
 import './Login.scss';
 import './style.scss';
-import { ServiceData } from '../../service/ServiceData';
+import ServiceData from "../../service/dataUtils";
 import Storage from '../../service/StorageData';
 import { Redirect } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
@@ -91,7 +91,10 @@ export class Reset extends React.Component {
   }
 
   loadData = async (userData) => {
-    return await ServiceData('forgot/reset', 'POST', userData);
+    const headers = ServiceData.headers();
+    const options = ServiceData.options('POST', userData, headers);
+
+    return await ServiceData.execute('forgot/reset', options);
   }
 
   reset = (e) => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment }  from 'react';
 import AddUser from '../userComponents/addUser';
 import EditUser from '../userComponents/editUser';
 import UserTable from "../userComponents/userTable";
-import { ServiceData } from "../../../service/ServiceData";
+import ServiceData from "../../../service/dataUtils";
 import Storage from "../../../service/StorageData";
 import './user.scss';
 import _ from 'lodash';
@@ -219,10 +219,13 @@ const errorStyle = {
 }
 
 const loadUsers = async (token, admin)=> {
+	const headers = ServiceData.headers(token);
+	const options = ServiceData.options('GET', null, headers);
+	
 	if (admin)
-		return await ServiceData('users', 'GET', null, token);
+		return await ServiceData.execute('users', options);
 	else
-		return await ServiceData('users/me', 'GET', null, token);
+		return await ServiceData('users/me', options);
 }
 
 const getUser = async (id)=> {
@@ -230,7 +233,10 @@ const getUser = async (id)=> {
 	const path = `users/${id}`;
 	let result = {}
 	
-	await ServiceData(path, 'GET', null, token)
+	const headers = ServiceData.headers(token);
+    const options = ServiceData.options('GET', null, headers);
+
+	await ServiceData.execute(path, options)
 		.then((data) => {
 			if (data.data) {
 				result.data = data.data;
@@ -258,7 +264,10 @@ const saveUserBD = async (user) => {
 	}
 	
 	console.log("-->", user);
-	await ServiceData(path, method, user, token)
+	const headers = ServiceData.headers(token);
+	const options = ServiceData.options(method, user, null, headers);
+	
+	await ServiceData.execute(path, options)
 		.then((data) => {
 			if (data.data) {
 				result.data = data.data;
@@ -281,7 +290,10 @@ const deleteUserBD = async (id) => {
 	const token = Storage.get('token');
 	const path = `users/${id}`;
 
-	await ServiceData(path, 'DELETE', null, token)
+	const headers = ServiceData.headers(token);
+	const options = ServiceData.options('DELETE', null, headers);
+	
+	await ServiceData.execute(path, options)
 		.then((data) => {
 			if (data.data) {
 				result.data = data.data;

@@ -23,6 +23,9 @@ const navigation = (user, logout) => {
                     <NavLink style={navStyle} to='/team' activeClassName="active-link">
                         <li>Team</li>
                     </NavLink>
+                    <NavLink style={navStyle} to='/championship' activeClassName="active-link">
+                        <li>Championship</li>
+                    </NavLink>
                     <NavLink style={navStyle} to='/game' activeClassName="active-link">
                         <li>Game</li>
                     </NavLink>

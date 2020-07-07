@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { Home } from '../components/pages/normal/index';
 import User from '../components/pages/normal/user';
 import Team from '../components/pages/admin/team';
+import Championship from '../components/pages/admin/championship';
 import {Game, Payment, Season } from '../components/pages/admin/index';
 import { Nav } from '../components/nav/index';
 import Storage from '../service/StorageData';
@@ -37,6 +38,7 @@ export default function AppWrapper() {
                         <Route path='/home' component={()=> <Home onChange={handleUser} /> } />
                         <Route path='/user' component={()=> <User admin={true}/> } />
                         <Route path='/team' component={Team} />
+                        <Route path='/championship' component={Championship} />
                         <Route path='/game' component={Game} />
                         <Route path='/payment' component={Payment} />
                         <Route path='/season' component={Season} />

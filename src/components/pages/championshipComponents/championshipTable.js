@@ -7,7 +7,7 @@ const ChampionshipTable = (props) => {
     }
 
     const deleteRow = (id) => {
-        props.deleteTeam(id);
+        props.deleteChampionship(id);
     }
 
     const columns = [

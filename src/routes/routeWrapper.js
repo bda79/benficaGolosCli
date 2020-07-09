@@ -5,7 +5,8 @@ import { Home } from '../components/pages/normal/index';
 import User from '../components/pages/normal/user';
 import Team from '../components/pages/admin/team';
 import Championship from '../components/pages/admin/championship';
-import {Game, Payment, Season } from '../components/pages/admin/index';
+import Game from '../components/pages/admin/game';
+import {Payment, Season } from '../components/pages/admin/index';
 import { Nav } from '../components/nav/index';
 import Storage from '../service/StorageData';
 
@@ -13,8 +14,6 @@ export default function AppWrapper() {
     const [user, setUser] = useState({});
 
     function handleUser(value) {
-        console.log("value", value);
-        console.log("User", user);
         if (user.name !== value.name)
             setUser(value);
     }

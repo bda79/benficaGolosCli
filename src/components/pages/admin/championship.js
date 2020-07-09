@@ -63,10 +63,10 @@ const Championship = () => {
 		
     }
     
-    const updateChampionship = async (id, updatedChampionship) => {
+    const updateChampionship = async (id, champ) => {
 		const toUpdate = championships.find((championship) => championship._id === id);
 		if (toUpdate) {
-			const {data, error} = await saveChampionshipBD(updatedChampionship);
+			const {data, error} = await saveChampionshipBD(champ);
 			if (data) {
 				let bdChampionship = data;
 				setEditing(false);
@@ -147,9 +147,7 @@ const saveChampionshipBD = async (championship) => {
 		method = "POST";
 	}
 	
-
-	console.log("-->", championship);
-	const headers = ServiceData.headers(token, true);
+	const headers = ServiceData.headers(token);
 	const options = ServiceData.options(method, championship, headers);
 	
 	await ServiceData.execute(path, options)

@@ -6,12 +6,13 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 const { SearchBar } = Search;
 
 const ReactTable = props => {
-    console.log("p->", props);
     const [ data, setData ] = useState(props.listData);
+    const [ maxRows, setMaxRows ] = useState(props.maxRows || 5);
   
     useEffect(
       () => {
         setData(props.listData);
+        setMaxRows(props.maxRows || 5);
       },
       [ props ]
     );
@@ -23,7 +24,7 @@ const ReactTable = props => {
     );
         
     const options = {
-        paginationSize: 5,
+        paginationSize: maxRows,
         pageStartIndex: 1,
         // alwaysShowAllBtns: true, // Always show next and previous button
         // withFirstAndLast: false, // Hide the going to First and Last page button
@@ -40,7 +41,7 @@ const ReactTable = props => {
         showTotal: true,
         paginationTotalRenderer: customTotal,
         disablePageTitle: true,
-        sizePerPageList: [{ text: '5', value: 5 }]
+        sizePerPageList: [{ text: maxRows, value: maxRows }]
     };
     
     return(

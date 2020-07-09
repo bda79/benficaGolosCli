@@ -37,6 +37,7 @@ const AddTeam = props => {
             fileInput.value = null;
             return;
         }
+        else  setError(null);
 
         reader.onload = () => {
             setImg({img: img, imgUrl: reader.result});
@@ -62,6 +63,7 @@ const AddTeam = props => {
                 setTeam(initialState);
                 fileInput.value = null;
                 setImg({img: null, imgUrl: null});
+                setError(null);
             }
         }
     }
@@ -101,10 +103,7 @@ function validateTeam(team, img) {
         sigla: team.sigla,
         logo: name
     }
-
-    console.log("validateTeam", t, img.img);
     
-
     const schema = {
         name: Joi.string().min(5).max(50).required(),
         sigla: Joi.string().min(3).max(5).required(),

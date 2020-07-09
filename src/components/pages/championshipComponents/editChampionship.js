@@ -21,7 +21,7 @@ const EditChampionship = (props) => {
     }
 
     const handleUpdate = () => {
-        props.updateChampionship(championship);
+        props.updateChampionship(championship._id, championship);
     }
 
     return (

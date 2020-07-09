@@ -61,7 +61,6 @@ const User = (admin) => {
 			isAdmin: user.isAdmin
 		}
 
-		console.log("NewUser", newUser);
 		return await saveUserBD(newUser);
 	}
 
@@ -263,7 +262,6 @@ const saveUserBD = async (user) => {
 		method = "POST";
 	}
 	
-	console.log("-->", user);
 	const headers = ServiceData.headers(token);
 	const options = ServiceData.options(method, user, null, headers);
 	

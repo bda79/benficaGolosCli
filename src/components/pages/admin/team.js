@@ -7,7 +7,6 @@ import Storage from "../../../service/StorageData";
 
 
 const Team = () => {
-	console.log("Team ->");
     const [ error, setError ] = useState(null);
     const [ teams, setTeams ] = useState([]);
     const [ currentTeam, setCurrentTeam ] = useState({ _id: '', name: '', sigla: '', logo: ''});
@@ -64,10 +63,11 @@ const Team = () => {
 		
     }
     
-    const updateTeam = async (id, updatedTeam) => {
+    const updateTeam = async (team) => {
+		const id = team._id;
 		const toUpdate = teams.find((team) => team._id === id);
 		if (toUpdate) {
-			const {data, error} = await saveTeamBD(updatedTeam);
+			const {data, error} = await saveTeamBD(team);
 			if (data) {
 				let bdTeam = data;
 				setEditing(false);
@@ -139,8 +139,11 @@ const loadTeam = async (token) => {
 
 const saveTeamBD = async (team) => {
 	let result = {};
+	const haveFile = team.logo.size ? true : false;
+	
+
 	const token = Storage.get('token');
-	let path = `teams/${team._id}`;
+	let path = haveFile ?`teams/${team._id}`: `teams/${team._id}/noFile`;
 	let method = 'PUT'
 	if (!team._id) {
 		path = "teams";
@@ -148,16 +151,15 @@ const saveTeamBD = async (team) => {
 	}
 	
 	let formData = new FormData();
-		if (team._id) {
-			formData.append('_id', team._id);
-		}
-		formData.append('logo', team.logo);
-		formData.append('name', team.name);
-		formData.append('sigla', team.sigla);
+	if (team._id) {
+		formData.append('_id', team._id);
+	}
+	formData.append('logo', team.logo);
+	formData.append('name', team.name);
+	formData.append('sigla', team.sigla);
 
-	console.log("-->", team);
-	const headers = ServiceData.headers(token, true);
-	const options = ServiceData.options(method, formData, headers);
+	const headers = haveFile ? ServiceData.headers(token, true) : ServiceData.headers(token);
+	const options = haveFile ? ServiceData.options(method, formData, headers) : ServiceData.options(method, team, headers);
 	
 	await ServiceData.execute(path, options)
 		.then((data) => {

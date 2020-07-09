@@ -19,8 +19,22 @@
   min-width: 35em;
   box-shadow: 5px 5px #808080;
 }
+
+.flex-container .column-game{
+  padding: 5px;
+  width: 40%;
+  display: flow-root;
+}
+.flex-container .column-game-table{
+  padding: 5px;
+  display: flow-root;
+}
+.column-game-table .search-label {
+  min-width: 35em;
+  box-shadow: 5px 5px #808080;
+}
+
 .form {
-    margin-top: 1em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -30,11 +44,12 @@
       flex-direction: column;
       align-items: flex-start;
       width: fit-content;
+      margin-bottom: 5px;
       label {
         font-size: 18px;
         text-shadow: 10px 5px 10px;
       }
-      input:not([type=checkbox]):not([type=file]){
+      input:not([type=checkbox]):not([type=file]):not(.select-search__input){
         margin-top: 5px;
         min-width: 26em;
         height: 30px;
@@ -142,8 +157,6 @@
   margin: 0 0 1.5rem 0;
   border-collapse: collapse;
   border-spacing: 0;
-  width: 100%;
-  max-width: 100%;
   padding-top: 2px;
 }
 .tableHeader {
@@ -153,41 +166,6 @@
     text-align: left;
     padding: 0.5rem;
 }
-/*
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;
-    max-width: 100%;
-  }
-  
-  // Extra border underneath header
-  thead th {
-    border-bottom: 2px solid #dedede;
-  }
-  
-  // Extra border above footer
-  tfoot th {
-    border-top: 2px solid #dedede;
-  }
-  
-  td {
-    border-bottom: 1px solid #dedede;
-  }
-  
-  th,
-  td {
-    text-align: left;
-    padding: 0.5rem;
-  }
-
-  p,
-  ol,
-  ul,
-  dl,
-  table {
-    margin: 0 0 1.5rem 0;
-  }*/
 
 .button-joiner {
   text-align: center;

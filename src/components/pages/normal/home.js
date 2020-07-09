@@ -50,7 +50,7 @@ export class Home extends React.Component {
     }
 
     render() {
-        console.log("Home render");
+        
         const {user, isLogged} = this.state;
         
         if (!isLogged) {

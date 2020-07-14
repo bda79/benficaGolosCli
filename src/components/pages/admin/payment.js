@@ -1,13 +1,13 @@
 import React from "react";
 
-export class Payment extends React.Component {
+const Payment = () => {
     //TODO mostrar tabela pagamento no user ou
     // adicionar pagamento (nav e route) ao utilizador normal
-    render() {
-        return (
-            <div>
-                <h1>Payment Page</h1>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <h1>Payment Page</h1>
+        </div>
+    );
 }
+
+export default Payment;

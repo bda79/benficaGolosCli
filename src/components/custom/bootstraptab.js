@@ -63,6 +63,7 @@ const ReactTable = props => {
                             headerWrapperClasses="tableHeader"
                             bodyClasses="tableBody"
                             wrapperClasses="tableContainer"
+                            selectRow={props.selectRow}
                         />
                     </div>
                 )

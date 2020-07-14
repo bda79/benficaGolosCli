@@ -117,7 +117,7 @@ function display(error, editing, teams, setEditing, currentTeam, updateTeam, _ad
                     )}
                 </div>
                 <div className="column">
-                    <h2>View teams</h2>
+                    <h2>View Teams</h2>
                     <TeamTable teams={teams} editRow={editRow} deleteTeam={deleteTeam} />
                 </div>
             </div>

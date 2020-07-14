@@ -79,6 +79,7 @@ const EditGame = (props) => {
     }
 
     const handleUpdate = () => {
+        setError(null);
         props.updateGame(game);
     }
 

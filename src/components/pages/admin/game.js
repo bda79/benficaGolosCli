@@ -15,7 +15,7 @@ const Game = () => {
     const [ currentGame, setCurrentGame ] = useState(
 		{ _id: '', name: '', date: '', championshipId: '', homeTeamId: '', awayTeamId: '', homeGoals: '', awayGoals: '' });
 	
-		const [ editing, setEditing ] = useState(false);
+	const [ editing, setEditing ] = useState(false);
 
     useEffect(() => {
         const token = Storage.get('token');

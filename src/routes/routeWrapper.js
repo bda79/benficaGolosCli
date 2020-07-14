@@ -5,8 +5,9 @@ import { Home } from '../components/pages/normal/index';
 import User from '../components/pages/normal/user';
 import Team from '../components/pages/admin/team';
 import Championship from '../components/pages/admin/championship';
+import Payment from '../components/pages/admin/payment';
 import Game from '../components/pages/admin/game';
-import {Payment, Season } from '../components/pages/admin/index';
+import Season from '../components/pages/admin/season';
 import { Nav } from '../components/nav/index';
 import Storage from '../service/StorageData';
 

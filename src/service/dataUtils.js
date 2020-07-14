@@ -44,6 +44,27 @@ const ServiceData = {
         return result;
     },
 
+    seasonExecute: async function(pathSeason, pathGame, options) {
+        let baseUrl = 'http://localhost:5000/api/';
+    
+        let result = {};
+        try {
+            await axios.all([
+                axios(baseUrl + pathSeason, options),
+                axios(baseUrl + pathGame, options)
+            ])
+            .then(axios.spread(function (seasons, games) {
+                result.seasons = seasons.data || [];
+                result.games = games.data || [];
+              }))
+        } catch (error) {
+            console.log(error);
+            result.error = error.response.data;
+        }
+
+        return result;
+    },
+
     options: function(method, userData, headers) {
         const options = {};
 

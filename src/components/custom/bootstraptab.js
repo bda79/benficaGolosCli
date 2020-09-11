@@ -22,6 +22,10 @@ const ReactTable = props => {
             Showing { from } to { to } of { size } Results
           </span>
     );
+
+    const handleDataChange = (value) => {
+        console.log("Size", value);
+    }
         
     const options = {
         paginationSize: maxRows,
@@ -58,12 +62,13 @@ const ReactTable = props => {
                         <BootstrapTable
                             { ..._props.baseProps }
                             pagination={ paginationFactory(options) }
-                            noDataIndication="No users"
+                            noDataIndication="No data"
                             defaultSorted={ props.defaultSorted }
                             headerWrapperClasses="tableHeader"
                             bodyClasses="tableBody"
                             wrapperClasses="tableContainer"
                             selectRow={props.selectRow}
+                            onDataSizeChange={ handleDataChange }
                         />
                     </div>
                 )

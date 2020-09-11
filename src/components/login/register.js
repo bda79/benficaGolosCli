@@ -103,7 +103,7 @@ export class Register extends React.Component {
 
   render() {
     const { errors, submitError, isLogged, showPassword } = this.state;
-    const iconName = showPassword ? "eye-slash" : "eye";
+    const iconName = showPassword ? "eye" : "eye-slash";
 
     if (isLogged) {
       return (<Redirect to={'/home'}/>);

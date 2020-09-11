@@ -65,6 +65,73 @@ const ServiceData = {
         return result;
     },
 
+    paymentExecute: async function(pathPayment, pathUser, options) {
+        let baseUrl = 'http://localhost:5000/api/';
+    
+        let result = {};
+        try {
+            await axios.all([
+                axios(baseUrl + pathPayment, options),
+                axios(baseUrl + pathUser, options)
+            ])
+            .then(axios.spread(function (payments, users) {
+                result.payments = payments.data || [];
+                result.users = users.data || [];
+              }))
+        } catch (error) {
+            console.log(error);
+            result.error = error.response.data;
+        }
+
+        return result;
+    },
+
+    homeExecute: async function(pathMe, pathSeason, pathStatus, options) {
+        let baseUrl = 'http://localhost:5000/api/';
+        
+        let result = {};
+        try {
+            await axios.all([
+                axios(baseUrl + pathMe, options),
+                axios(baseUrl + pathSeason, options),
+                axios(baseUrl + pathStatus, options)
+            ])
+            .then(axios.spread(function (me, seasons, status) {
+                result.me = me.data || '';
+                result.seasons = seasons.data || [];
+                result.status = status.data || [];
+              }))
+        } catch (error) {
+            console.log(error);
+            result.error = error.response.data;
+        }
+
+        return result;
+    },
+
+    normalUserExecute: async function(pathMe, pathSeason, pathStatus, options) {
+        let baseUrl = 'http://localhost:5000/api/';
+        
+        let result = {};
+        try {
+            await axios.all([
+                axios(baseUrl + pathMe, options),
+                axios(baseUrl + pathSeason, options),
+                axios(baseUrl + pathStatus, options)
+            ])
+            .then(axios.spread(function (me, seasons, status) {
+                result.me = me.data || '';
+                result.seasons = seasons.data || [];
+                result.status = status.data || [];
+              }))
+        } catch (error) {
+            console.log(error);
+            result.error = error.response.data;
+        }
+
+        return result;
+    },
+
     options: function(method, userData, headers) {
         const options = {};
 

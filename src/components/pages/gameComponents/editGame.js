@@ -30,6 +30,7 @@ const EditGame = (props) => {
     );
 
     const handleEdit = () => {
+         setError(null);
         props.setEditing(false);
     }
 

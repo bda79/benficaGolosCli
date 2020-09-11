@@ -50,14 +50,14 @@ export class Signin extends React.Component {
     if ( email && password) {
       const userData = { email: email, password: password};
       this.loadData(userData)
-      .then((data) => {
-          if (data.data) {
-            Storage.add('token', data.data);
-            this.setState({isLogged: true});
-          }
-          if (data.error) {
-            this.setState({error: data.error});
-          }
+        .then((data) => {
+            if (data.data) {
+              Storage.add('token', data.data);
+              this.setState({isLogged: true});
+            }
+            if (data.error) {
+              this.setState({error: data.error});
+            }
       }).catch(err => {
           console.log("Err", err);
           this.setState({error: err});
@@ -76,7 +76,7 @@ export class Signin extends React.Component {
 
   render() {
     const {error, isLogged, showPassword} = this.state;
-    const iconName = showPassword ? "eye-slash" : "eye";
+    const iconName = showPassword ? "eye" : "eye-slash";
 
     if (isLogged) {
       return (<Redirect to={'/home'}/>);

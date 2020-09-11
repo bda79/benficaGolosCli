@@ -72,7 +72,7 @@ const EditUser = props => {
                   />
                   <FontAwesome onClick={togglePassword}
                     className="password-icon"
-                    name={ showPassword ? "eye-slash" : "eye" }
+                    name={ showPassword ? "eye" : "eye-slash" }
                     style={{ 
                       position: 'absolute',
                       right: '20px',

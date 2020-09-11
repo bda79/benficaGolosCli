@@ -125,7 +125,7 @@ export class Reset extends React.Component {
 
   render() {
     const {email, showPassword, errors, error, redirect, isLogged} = this.state;
-    const iconName = showPassword ? "eye-slash" : "eye";
+    const iconName = showPassword ? "eye" : "eye-slash";
     if (isLogged)
       return (<Redirect to={'/home'}/>);
     

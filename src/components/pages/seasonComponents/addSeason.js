@@ -2,7 +2,7 @@ import React, { useState} from 'react';
 import Joi from 'joi';
 
 const AddSeason = (props) => {
-    const initialState = {_id: null, name: '', begin:'', end: ''};
+    const initialState = {name: '', begin:'', end: ''};
     const [ season, setSeason ] = useState(initialState);
     const [ error, setError ] = useState(null);
 

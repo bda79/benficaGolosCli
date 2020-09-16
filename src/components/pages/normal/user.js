@@ -20,50 +20,55 @@ const User = (admin) => {
 	const [ editing, setEditing ] = useState(false);
 
 	useEffect(() => {
-		
+		let mounted = true;
+
 		const token = Storage.get('token');
 		if (token) {
 			loadUsers(token, admin.admin)
 				.then((data) => {
-					console.log(data);
-					if (data) {
-						if (admin.admin)
-							setUsers( data.data );
-						else 
-						{
-							const user = data.me;
-							user.password = null;
-							setCurrentUser( user );
-							if (data.seasons) {
-								const seasons = data.seasons;
-								let seasonApi = seasons.map(season => {
-									return {value: season._id, name: season.name}
-								});
+					if (mounted) {
+						if (data) {
+							if (admin.admin)
+								setUsers( data.data );
+							else 
+							{
+								const user = data.me;
+								user.password = null;
+								setCurrentUser( user );
+								if (data.seasons) {
+									const seasons = data.seasons;
+									let seasonApi = seasons.map(season => {
+										return {value: season._id, name: season.name}
+									});
+									
+									const defaultValue = [{value: "0", name: '----'}];
+									seasonApi = defaultValue.concat(seasonApi);
+									setSeasons(seasonApi);
+									setSelectedSeason("0");
+								}
 								
-								const defaultValue = [{value: "0", name: '----'}];
-								seasonApi = defaultValue.concat(seasonApi);
-								setSeasons(seasonApi);
-								setSelectedSeason("0");
-						    }
-							
-							if (data.status) {
-								let statusApi = data.status;
-								statusApi.forEach((status, index) => status._id = index + 1);
+								if (data.status) {
+									let statusApi = data.status;
+									statusApi.forEach((status, index) => status._id = index + 1);
 
-								setStatus(statusApi);
+									setStatus(statusApi);
+								}
+
 							}
-
+							setError(null);
 						}
-						setError(null);
-					}
-					if (data.error) {
-						setError( data.error );
+						if (data.error) {
+							setError( data.error );
+						}
 					}
 				})
 				.catch(err => {
 					console.log("Error: ", err);
 				})
 		}
+		return () => {
+            mounted = false;
+        }
 	}, [admin]);
 
 

@@ -107,6 +107,7 @@ export class Signin extends React.Component {
                   name="password" 
                   placeholder="password" 
                   onChange={this.onChange}
+                  autoComplete="on"
                 />
                 <FontAwesome onClick={this.togglePassword}
                   className="password-icon"

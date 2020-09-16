@@ -77,7 +77,7 @@ const SeasonTable = (props) => {
           headerAlign: 'center'}
     ];
 
-    return(<ReactTable listData={props.seasons} columns={columns} defaultSorted={defaultSorted} maxRows={4} />);
+    return(<ReactTable listData={props.seasons} columns={columns} defaultSorted={defaultSorted} maxRows={4} searchID={'season'} />);
 }
 
 const defaultSorted = [{dataField: 'name', order: 'asc' }];

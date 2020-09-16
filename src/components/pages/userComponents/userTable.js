@@ -44,7 +44,7 @@ const UserTable = props => {
       
     const defaultSorted = [{dataField: 'name', order: 'asc' }];
 
-    return(<ReactTable listData={props.users} columns={columns} defaultSorted={defaultSorted} />);
+    return(<ReactTable listData={props.users} columns={columns} defaultSorted={defaultSorted} searchID={'user'} />);
 }
 
 export default UserTable;

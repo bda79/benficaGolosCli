@@ -1,4 +1,3 @@
-
 const ImageUtils = {
     validateImage: function(img) {
         const fileTypes = "jpeg|jpg|png|gif|svg";
@@ -17,7 +16,7 @@ const ImageUtils = {
         return null;
     },
     getImage: function(path) {
-        const server = 'http://localhost:5000';//TODO get from env
+        const server = process.env.REACT_APP_SERVER;//'http://localhost:5000';//TODO get from env
         return `${server}/${path}`;
     }
 

@@ -41,7 +41,7 @@ const ChampionshipTable = (props) => {
       
     const defaultSorted = [{dataField: 'name', order: 'asc' }];
 
-    return(<ReactTable listData={props.championships} columns={columns} defaultSorted={defaultSorted} />);
+    return(<ReactTable listData={props.championships} columns={columns} defaultSorted={defaultSorted} searchID={'champ'}/>);
 }
 
 export default ChampionshipTable;

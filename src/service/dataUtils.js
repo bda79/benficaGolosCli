@@ -1,8 +1,9 @@
 import axios from 'axios';
+import {server_url} from './config';
 
 const ServiceData = {
     execute: async function(path, options) {
-        let baseUrl = 'http://localhost:5000/api/';
+        let baseUrl = server_url;//'http://localhost:5000/api/';
     
         let result = {};
         try {
@@ -22,7 +23,7 @@ const ServiceData = {
     },
 
     gameExecute: async function(pathGame, pathChamp, pathTeam, options) {
-        let baseUrl = 'http://localhost:5000/api/';
+        let baseUrl = server_url;//'http://localhost:5000/api/';
     
         let result = {};
         try {
@@ -45,7 +46,7 @@ const ServiceData = {
     },
 
     seasonExecute: async function(pathSeason, pathGame, options) {
-        let baseUrl = 'http://localhost:5000/api/';
+        let baseUrl = server_url;//'http://localhost:5000/api/';
     
         let result = {};
         try {
@@ -66,7 +67,7 @@ const ServiceData = {
     },
 
     paymentExecute: async function(pathPayment, pathUser, options) {
-        let baseUrl = 'http://localhost:5000/api/';
+        let baseUrl = server_url;//'http://localhost:5000/api/';
     
         let result = {};
         try {
@@ -87,7 +88,7 @@ const ServiceData = {
     },
 
     homeExecute: async function(pathMe, pathSeason, pathStatus, options) {
-        let baseUrl = 'http://localhost:5000/api/';
+        let baseUrl = server_url;//'http://localhost:5000/api/';
         
         let result = {};
         try {
@@ -110,7 +111,7 @@ const ServiceData = {
     },
 
     normalUserExecute: async function(pathMe, pathSeason, pathStatus, options) {
-        let baseUrl = 'http://localhost:5000/api/';
+        let baseUrl = server_url;//'http://localhost:5000/api/';
         
         let result = {};
         try {

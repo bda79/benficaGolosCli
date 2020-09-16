@@ -71,6 +71,7 @@ const AddUser = props => {
                             name="password" 
                             value={user.password} 
                             onChange={handleInputChange}
+                            autoComplete="on"
                         />
                         <FontAwesome onClick={togglePassword}
                             className="password-icon"

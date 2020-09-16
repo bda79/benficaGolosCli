@@ -58,7 +58,7 @@ const ReactTable = props => {
             {
                 _props => (
                     <div>
-                        <SearchBar { ..._props.searchProps } />
+                        <SearchBar tableId={props.searchID} { ..._props.searchProps } />
                         <BootstrapTable
                             { ..._props.baseProps }
                             pagination={ paginationFactory(options) }

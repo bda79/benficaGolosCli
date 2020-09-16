@@ -89,7 +89,7 @@ const GameTable = (props) => {
       
     const defaultSorted = [{dataField: 'name', order: 'asc' }];
 
-    return(<ReactTable listData={props.games} columns={columns} defaultSorted={defaultSorted} maxRows={4} />);
+    return(<ReactTable listData={props.games} columns={columns} defaultSorted={defaultSorted} maxRows={4} searchID={'game'}/>);
 }
 
 export default GameTable;

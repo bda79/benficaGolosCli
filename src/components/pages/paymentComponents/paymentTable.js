@@ -64,7 +64,7 @@ const PaymentTable = (props) => {
       
     const defaultSorted = [{dataField: 'name', order: 'asc' }];
 
-    return(<ReactTable listData={props.payments} columns={columns} defaultSorted={defaultSorted} maxRows={5} />);
+    return(<ReactTable listData={props.payments} columns={columns} defaultSorted={defaultSorted} maxRows={5} searchID={'payment'}/>);
 }
 
 export default PaymentTable;

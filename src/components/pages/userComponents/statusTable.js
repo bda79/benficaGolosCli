@@ -32,7 +32,7 @@ const StatusTable = props => {
       
     const defaultSorted = [{dataField: 'date', order: 'asc' }];
 
-    return(<ReactTable listData={props.status} columns={columns} defaultSorted={defaultSorted} maxRows={5}/>);
+    return(<ReactTable listData={props.status} columns={columns} defaultSorted={defaultSorted} maxRows={5} searchID={'status'}/>);
 }
 
 export default StatusTable;

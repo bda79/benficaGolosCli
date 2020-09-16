@@ -52,7 +52,7 @@ const TeamTable = props => {
       
     const defaultSorted = [{dataField: 'name', order: 'asc' }];
 
-    return(<ReactTable listData={props.teams} columns={columns} defaultSorted={defaultSorted} />);
+    return(<ReactTable listData={props.teams} columns={columns} defaultSorted={defaultSorted} searchID={'team'} />);
 }
 
 export default TeamTable;

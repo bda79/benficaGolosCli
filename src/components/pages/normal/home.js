@@ -9,6 +9,8 @@ import {ImageUtils} from '../../../service/utils';
 import Select from '../../custom/selectSearch';
 
 export class Home extends React.Component {
+    _isMounted = false;
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -24,13 +26,13 @@ export class Home extends React.Component {
     }
 
     fillState = async (data, seasonId) => {
+        
         if (data.me) {
             const user = data.me;
             this.setState({
                 user: user
             });
             Storage.add('cUser', user);
-            this.props.onChange(user);
         }
         if (data.seasons) {
             const size = data.seasons.length;
@@ -80,20 +82,27 @@ export class Home extends React.Component {
     }
 
     componentDidMount() {
+        this._isMounted = true;
         const token = Storage.get('token');
         
         if (token) {
             getCurrentData(token)
                 .then((data) => {
-                    this.fillState(data);
+                    if (this._isMounted)
+                        this.fillState(data);
                 })
                 .catch(err => {
-                   console.log('Error', err); 
+                console.log('Error', err); 
                 });
         }
         else {
             this.setState({isLogged: false});
         }
+        
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     render() {
@@ -127,7 +136,7 @@ export class Home extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <GameTable games={games} />
+                    <GameTable games={games} searchID={'game'} />
                 </div>
                 <div className="fixed">
                     <StatusTable status={status}/>
@@ -164,7 +173,7 @@ const StatusTable = (props) => {
 
     const defaultSorted = [{dataField: 'date', order: 'desc' }];
 
-    return(<ReactTable listData={props.status} columns={columns} defaultSorted={defaultSorted} maxRows={4} />);
+    return(<ReactTable listData={props.status} columns={columns} defaultSorted={defaultSorted} maxRows={4} searchID={'status'} />);
 }
 
 const GameTable = (props) => {
@@ -222,7 +231,7 @@ const GameTable = (props) => {
       
     const defaultSorted = [{dataField: 'date', order: 'desc' }];
 
-    return(<ReactTable listData={props.games} columns={columns} defaultSorted={defaultSorted} maxRows={4} />);
+    return(<ReactTable listData={props.games} columns={columns} defaultSorted={defaultSorted} maxRows={4} searchID={'game'}/>);
 }
 
 async function getCurrentData(token) {
@@ -261,7 +270,7 @@ async function getData(token, seasonId) {
     const options = ServiceData.options('GET', null, headers);
 
     const statusPath = `status/${seasonId}`;
-        result.seasonId = seasonId;
+    result.seasonId = seasonId;
 
         await ServiceData.homeExecute('users/me', 'seasons', statusPath, options)
         .then((res) => {

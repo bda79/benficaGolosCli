@@ -16,7 +16,7 @@ const ImageUtils = {
         return null;
     },
     getImage: function(path) {
-        const server = process.env.REACT_APP_SERVER;//'http://localhost:5000';//TODO get from env
+        const server = process.env.REACT_APP_SERVER;//'http://localhost:5000';
         return `${server}/${path}`;
     }
 

@@ -1,1 +1,1 @@
-web:node scr/index.js
+web:npm start

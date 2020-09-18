@@ -94,17 +94,19 @@ export class Forgot extends React.Component {
                   {error && error.length > 0 && (<span className="errorMessage">{error}</span>)}
                   {success && success.length > 0 && (<span className="successMessage">{success}</span>)}
                 </div>
-                <NavLink style={navStyle} to='/login'>to Login</NavLink>
-                {toLogin && (
-                  <button type="button" className="btn" style={groupStyle} onClick={this.toLogin}>
-                    Go to Login
-                  </button>
-                )}
-                {!toLogin && (
-                  <button type="button" className="btn" style={groupStyle} onClick={this.sendEmail}>
-                    Send
-                  </button>
-                )}
+                <div className="footer">
+                  <NavLink style={navStyle} to='/login'>to Login</NavLink>
+                  {toLogin && (
+                    <button type="button" className="btn" style={groupStyle} onClick={this.toLogin}>
+                      Go to Login
+                    </button>
+                  )}
+                  {!toLogin && (
+                    <button type="button" className="btn" style={groupStyle} onClick={this.sendEmail}>
+                      Send
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>

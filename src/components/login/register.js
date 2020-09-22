@@ -2,10 +2,16 @@ import React from "react";
 import loginImg from "../../img/slbLogo.jpg";
 import ServiceData from "../../service/dataUtils";
 import {Redirect} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 
 const emailRegex = RegExp(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
 const passwordRegex = RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{5,}$/);
+
+const navStyle = {
+  marginBottom: '25px',
+  display: 'flex'
+}
 
 const valid = ({errors, ...rest}) => {
     let valid = true;
@@ -158,6 +164,7 @@ export class Register extends React.Component {
           </div>
         </div>
         <div className="footer">
+        <NavLink style={navStyle} to='/login' onClick={this.props.onClick} > Have an Account? </NavLink>
           <button type="button" className="btn" onClick={this.handleSubmit}>
             Register
           </button>

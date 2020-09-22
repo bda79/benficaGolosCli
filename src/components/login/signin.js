@@ -126,6 +126,7 @@ export class Signin extends React.Component {
         </div>
         <div className="footer">
           <NavLink style={navStyle} to='/forgot'>Forgot Password?</NavLink>
+          <NavLink style={navStyle} to='/login' onClick={this.props.onClick} > Create an  Account</NavLink>
           <button type="button" className="btn" onClick={this.login}>
             Login
           </button>

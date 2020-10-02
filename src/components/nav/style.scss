@@ -1,23 +1,17 @@
-nav {
-    display: flex;
-    justify-content: flex-end;
-    min-height: 28%;
-    background: url('../../img/slbBanner2.jpg');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-}
-
 .nav-links {
-    width: 50%;
+    width: 100%;
     display: flex;
     justify-content: space-evenly;
-    align-items: end;
+    align-items: center;
     list-style: none;
     padding-bottom: 8em;
 }
 
+.nav-links a:hover{
+    color : #C00;
+}
+
 .active-link {
-    background-color: #C00;
+    background-color: #929090;
     color: #FFF;
 }
